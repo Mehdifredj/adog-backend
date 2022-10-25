@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const User = require("../models/users.js");
 const bcrypt = require("bcrypt");
+const uid2 = require('uid2');
 
 // Route signup pour l'inscription
 router.post("/signup", function (req, res) {
@@ -23,6 +24,7 @@ router.post("/signup", function (req, res) {
         password: bcrypt.hashSync(req.body.password, 10),
         email: req.body.email,
         activatedAccount: true,
+        token: uid2(32),
       });
       // Enregistrement du nouvel utilisateur dans la base de donnée
       newUser.save().then((newDoc) => {
@@ -78,10 +80,10 @@ router.post("/signup", function (req, res) {
 // -----------------------------------------------------------------------------------
 
 // Route PUT pour update du profil
-router.put("/update", function (req, res) {
+router.put("/update/:token", function (req, res) {
   // On met a jour un utilisateur
   User.updateOne(
-    { email: req.body.email }, // Critère de recherche pour retrouver l'utilisateur en BDD via reducer
+    { token : req.params.token }, // Critère de recherche pour retrouver l'utilisateur en BDD via reducer
     {
       // Ensemble des éléments qui sont mis à jour
       gender: req.body.gender,
@@ -95,12 +97,12 @@ router.put("/update", function (req, res) {
       isLikedBy: req.body.isLikedBy,
     }
   ).then(() => {
-    res.json({ result: true });
+    res.json({ result: true, userData:data });
   });
 });
 
-router.get("/getuser/:email", (req, res) => {
-  User.findOne({ email: req.params.email }).then((data) => {
+router.get("/getuser/:token", (req, res) => {
+  User.findOne({ email: req.params.token }).then((data) => {
     //console.log(data)
     if (data) {
       res.json({

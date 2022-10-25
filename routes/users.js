@@ -3,6 +3,12 @@ var router = express.Router();
 const User = require("../models/users.js");
 const bcrypt = require("bcrypt");
 
+
+
+
+
+
+//-----------------------------------------------------------------------------------
 // Route signup pour l'inscription
 router.post("/signup", function (req, res) {
   // Condition pour vérifier si l'utilisateur entre bien son name, email et password.
@@ -40,6 +46,7 @@ router.post("/signup", function (req, res) {
       });
     }
   });
+  //-----------------------------------------------------------------------------------
 
   // Route signin pour la connection
   router.post("/signin", function (req, res) {
@@ -51,7 +58,6 @@ router.post("/signup", function (req, res) {
       });
       return;
     }
-
     // On recherche en BDD par l'adresse email
     User.findOne({ email: req.body.email }).then((data) => {
       // Si l'addresse e-mail est existante

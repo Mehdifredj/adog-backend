@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const User = require("../models/users.js");
 const bcrypt = require("bcrypt");
-const uid2 = require('uid2');
+const uid2 = require("uid2");
 
 // Route signup pour l'inscription
 router.post("/signup", function (req, res) {
@@ -30,6 +30,8 @@ router.post("/signup", function (req, res) {
       newUser.save().then((newDoc) => {
         res.json({
           result: true,
+          name: newDoc.name,
+          token: newDoc.token,
           name: newDoc.name,
         });
       });
@@ -82,8 +84,9 @@ router.post("/signup", function (req, res) {
 // Route PUT pour update du profil
 router.put("/update/:token", function (req, res) {
   // On met a jour un utilisateur
+  console.log(req.params.token);
   User.updateOne(
-    { token : req.params.token }, // Critère de recherche pour retrouver l'utilisateur en BDD via reducer
+    { token: req.params.token }, // Critère de recherche pour retrouver l'utilisateur en BDD via reducer
     {
       // Ensemble des éléments qui sont mis à jour
       gender: req.body.gender,
@@ -96,25 +99,25 @@ router.put("/update/:token", function (req, res) {
       images: req.body.images,
       isLikedBy: req.body.isLikedBy,
     }
-  ).then(() => {
-    res.json({ result: true, userData:data });
+  ).then((data) => {
+    res.json({ result: true, userData: data });
   });
 });
 
-router.get("/getuser/:token", (req, res) => {
-  User.findOne({ email: req.params.token }).then((data) => {
+router.get("/getuser/:email", (req, res) => {
+  User.findOne({ email: req.params.email }).then((data) => {
     //console.log(data)
     if (data) {
       res.json({
-          result: true,
-          name: data.name,
-          breed: data.breed,
-          age: data.age,
-          gender: data.gender,
-          vaccins: data.vaccins,
-          aboutMe: data.aboutMe,
-          aboutMyOwner: data.aboutMyOwner,
-          city : data.city,
+        result: true,
+        name: data.name,
+        breed: data.breed,
+        age: data.age,
+        gender: data.gender,
+        vaccins: data.vaccins,
+        aboutMe: data.aboutMe,
+        aboutMyOwner: data.aboutMyOwner,
+        city: data.city,
       });
     } else {
       res.json({ result: false, error: "User not found" });

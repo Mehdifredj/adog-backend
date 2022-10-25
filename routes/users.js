@@ -105,4 +105,25 @@ router.put("/update", function (req, res) {
   });
 });
 
+router.get("/getuser/:email", (req, res) => {
+  User.findOne({ email: req.params.email }).then((data) => {
+    //console.log(data)
+    if (data) {
+      res.json({
+          result: true,
+          name: data.name,
+          breed: data.breed,
+          age: data.age,
+          gender: data.gender,
+          vaccins: data.vaccins,
+          aboutMe: data.aboutMe,
+          aboutMyOwner: data.aboutMyOwner,
+          city : data.city,
+      });
+    } else {
+      res.json({ result: false, error: "User not found" });
+    }
+  });
+});
+
 module.exports = router;

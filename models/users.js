@@ -14,6 +14,12 @@ const userSchema = mongoose.Schema({
   city: String,
   images: [String],
   isLikedBy: [String],
+  distanceMin: Number,
+  distanceMax: Number,
+  ageMin : Number,
+  ageMax : Number,
+  breddPref : String,
+  genderPref : String,
 });
 
 const User = mongoose.model("User", userSchema);

@@ -66,6 +66,8 @@ router.post("/signup", function (req, res) {
           res.json({
             result: true,
             name: data.name,
+            token: data.token,
+            email: data.email,
           });
           // Sinon si le mot de passe est incorrect on renvoie "false" et le front-end pourra afficher un message d'erreur
         } else {

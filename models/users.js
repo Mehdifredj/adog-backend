@@ -16,9 +16,9 @@ const userSchema = mongoose.Schema({
   isLikedBy: [String],
   distanceMin: Number,
   distanceMax: Number,
-  ageMin : Number,
-  ageMax : Number,
-  breddPref : String,
+  agePrefMin : Number,
+  agePrefMax : Number,
+  breedPref : String,
   genderPref : String,
   token: String,
 });

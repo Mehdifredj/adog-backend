@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema({
   ageMax : Number,
   breddPref : String,
   genderPref : String,
+  token: String,
 });
 
 const User = mongoose.model("User", userSchema);

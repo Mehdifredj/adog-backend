@@ -3,6 +3,12 @@ var router = express.Router();
 const User = require("../models/users.js");
 const bcrypt = require("bcrypt");
 const uid2 = require("uid2");
+const fetch = require('node-fetch')
+require('../models/connection');
+
+const cloudinary = require('cloudinary').v2;
+const uniqid = require('uniqid');
+const fs = require('fs');
 
 // Route signup pour l'inscription
 router.post("/signup", function (req, res) {
@@ -125,5 +131,21 @@ router.get("/getuser/:token", (req, res) => {
     }
   });
 });
+
+router.post('/users/upload', async (req, res) => {
+  const photoPath = `./tmp/${uniqid()}.jpg`;
+  const resultMove = await req.files.imageFromFront.mv(photoPath);
+ 
+  if (!resultMove) {
+    const resultCloudinary = await cloudinary.uploader.upload(photoPath);
+    //console.log(resultCloudinary);
+    res.json({ result: true, url: resultCloudinary.secure_url });
+  } else {
+    res.json({ result: false, error: resultMove });
+  }
+  fs.unlinkSync(photoPath);
+ });
+
+
 
 module.exports = router;

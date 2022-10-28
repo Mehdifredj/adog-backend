@@ -44,43 +44,42 @@ router.post("/signup", function (req, res) {
       });
     }
   });
-
-  // Route signin pour la connection
-  router.post("/signin", function (req, res) {
-    // Condition pour vérifier si l'utilisateur entre bien son email et son password.
-    if (!req.body.email || !req.body.password) {
-      res.json({
-        result: false,
-        message: "email or passowrd is needed",
-      });
-      return;
-    }
-
-    // On recherche en BDD par l'adresse email
-    User.findOne({ email: req.body.email }).then((data) => {
-      // Si l'addresse e-mail est existante
-      if (data) {
-        // On utilise la méthode compareSync de bcrypt pour vérifier la correspondance des deux mots de passe
-        if (bcrypt.compareSync(req.body.password, data.password)) {
-          // Si mot de passe correct alors on renvoi "true", et le front-end pourra alors se connecter
-          res.json({
-            result: true,
-            name: data.name,
-            token: data.token,
-            email: data.email,
-          });
-          // Sinon si le mot de passe est incorrect on renvoie "false" et le front-end pourra afficher un message d'erreur
-        } else {
-          res.json({ result: false, message: "Mot de passe incorrect" });
-        }
-        // Si l'adresse e-mail est inexistante, alors on renvoi "false" et le front-end ne pourra pas se connecter
-      } else {
-        res.json({ result: false, message: "Aucun utilisteur trouvé" });
-      }
-    });
-  });
 });
 
+// Route signin pour la connection
+router.post("/signin", function (req, res) {
+  // Condition pour vérifier si l'utilisateur entre bien son email et son password.
+  if (!req.body.email || !req.body.password) {
+    res.json({
+      result: false,
+      message: "email or passowrd is needed",
+    });
+    return;
+  }
+
+  // On recherche en BDD par l'adresse email
+  User.findOne({ email: req.body.email }).then((data) => {
+    // Si l'addresse e-mail est existante
+    if (data) {
+      // On utilise la méthode compareSync de bcrypt pour vérifier la correspondance des deux mots de passe
+      if (bcrypt.compareSync(req.body.password, data.password)) {
+        // Si mot de passe correct alors on renvoi "true", et le front-end pourra alors se connecter
+        res.json({
+          result: true,
+          name: data.name,
+          token: data.token,
+          email: data.email,
+        });
+        // Sinon si le mot de passe est incorrect on renvoie "false" et le front-end pourra afficher un message d'erreur
+      } else {
+        res.json({ result: false, message: "Mot de passe incorrect" });
+      }
+      // Si l'adresse e-mail est inexistante, alors on renvoi "false" et le front-end ne pourra pas se connecter
+    } else {
+      res.json({ result: false, message: "Aucun utilisteur trouvé" });
+    }
+  });
+});
 // -----------------------------------------------------------------------------------
 
 // Route PUT pour update du profil
@@ -106,8 +105,8 @@ router.put("/update/:token", function (req, res) {
   });
 });
 
-router.get("/getuser/:email", (req, res) => {
-  User.findOne({ email: req.params.email }).then((data) => {
+router.get("/getuser/:token", (req, res) => {
+  User.findOne({ token: req.params.token }).then((data) => {
     //console.log(data)
     if (data) {
       res.json({

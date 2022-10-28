@@ -14,8 +14,18 @@ const userSchema = mongoose.Schema({
   city: String,
   images: [String],
   isLikedBy: [String],
+  distanceMin: Number,
+  distanceMax: Number,
+  ageMin: Number,
+  ageMax: Number,
+  breddPref: String,
+  genderPref: String,
+  token: String,
+  mymatch: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+  conversation: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("users", userSchema);
 
 module.exports = User;

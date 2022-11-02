@@ -18,6 +18,7 @@
     "morgan": "~1.9.1",
     "node-fetch": "2",
     "nodemon": "^2.0.20",
+    "pusher": "^5.1.1-beta",
     "uid2": "^1.0.0",
     "uniqid": "^5.4.0"
   }

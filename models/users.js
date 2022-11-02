@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
   breedPref : String,
   genderPref : String,
   token: String,
+  rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }],
 });
 
 const User = mongoose.model("User", userSchema);

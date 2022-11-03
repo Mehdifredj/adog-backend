@@ -112,32 +112,32 @@ router.post("/new/", (req, res) => {
  //----------------------------------------------------------------------------------
 
         //concerne pusher, ne pas toucher
-        db.once("open", () => {
-          const changeStream = Message.watch();
-          changeStream.on("change", (change) => {
-            if (change.operationType === "insert") {
-              const messageDetails = change.fullDocument;
-              console.log("console log", messageDetails);
-              pusher.trigger("messagechannel", "inserted", {
-                name: messageDetails.name,
-                content: messageDetails.content,
-                date: messageDetails.date,
-                id: messageDetails.id,
-                roomId: messageDetails.roomId,
-              });
-            } else {
-              console.log("error triggering pusher");
-            }
-          });
-        });
+        // db.once("open", () => {
+        //   const changeStream = Message.watch();
+        //   changeStream.on("change", (change) => {
+        //     if (change.operationType === "insert") {
+        //       const messageDetails = change.fullDocument;
+        //       console.log("console log", messageDetails);
+        //       pusher.trigger("messagechannel", "inserted", {
+        //         name: messageDetails.name,
+        //         content: messageDetails.content,
+        //         date: messageDetails.date,
+        //         id: messageDetails.id,
+        //         roomId: messageDetails.roomId,
+        //       });
+        //     } else {
+        //       console.log("error triggering pusher");
+        //     }
+        //   });
+        // });
         
-        const pusher = new Pusher({
-          appId: "1492722",
-          key: "9f99e2de0211a1e7849d",
-          secret: "95c7bc41f8b646c5cd48",
-          cluster: "eu",
-          useTLS: true,
-        });
+        // const pusher = new Pusher({
+        //   appId: "1492722",
+        //   key: "9f99e2de0211a1e7849d",
+        //   secret: "95c7bc41f8b646c5cd48",
+        //   cluster: "eu",
+        //   useTLS: true,
+        // });
 
 
 module.exports = router;

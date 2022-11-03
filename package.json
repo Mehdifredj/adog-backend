@@ -19,6 +19,8 @@
     "node-fetch": "2",
     "nodemon": "^2.0.20",
     "pusher": "^5.1.1-beta",
+    "socket.io": "^4.5.3",
+    "ui2": "^1.4.0",
     "uid2": "^1.0.0",
     "uniqid": "^5.4.0"
   }

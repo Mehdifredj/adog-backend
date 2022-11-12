@@ -10,18 +10,11 @@ const userSchema = mongoose.Schema({
   vaccins: Boolean,
   aboutMe: String,
   aboutMyOwner: String,
-  activatedAccount: Boolean,
   city: String,
   images: [String],
   isLikedBy: [String],
-  distanceMin: Number,
-  distanceMax: Number,
-  agePrefMin : Number,
-  agePrefMax : Number,
-  breedPref : String,
-  genderPref : String,
   token: String,
-  rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }],
+  rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }], // clé étrangère
 });
 
 const User = mongoose.model("User", userSchema);

@@ -7,7 +7,7 @@ var logger = require('morgan');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 
-var indexRouter = require('./routes/index'); 
+
 var usersRouter = require('./routes/users');
 var messagesRouter = require('./routes/messages');
 
@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', indexRouter);
+
 app.use('/users', usersRouter);
 app.use('/messages', messagesRouter);
 
